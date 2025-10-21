@@ -5,30 +5,30 @@ It enables agents to list PRs, fetch details, inspect changed files, and view di
 
 🚀 Features
 
-🔐 Authenticate with a GitHub Personal Access Token (PAT)
-
-📋 List all open/closed pull requests for a repository
-
-🔍 Get detailed PR information (title, author, branches, etc.)
-
-🧾 Fetch file changes and PR diffs
-
-🧠 Integrate with GitHub Copilot Agents or OpenAI Agents via MCP
+    🔐 Authenticate with a GitHub Personal Access Token (PAT)
+    
+    📋 List all open/closed pull requests for a repository
+    
+    🔍 Get detailed PR information (title, author, branches, etc.)
+    
+    🧾 Fetch file changes and PR diffs
+    
+    🧠 Integrate with GitHub Copilot Agents or OpenAI Agents via MCP
 
 🧩 Architecture Overview
-┌────────────────────┐
-│  FastMCP Server    │  ←– your code
-├────────────────────┤
-│ Tools:             │
-│  • init_github_repo│
-│  • list_pull_request│
-│  • get_pull_request_details│
-│  • get_pull_request_files_changed│
-│  • get_pull_request_changed_diff│
-└────────┬───────────┘
-         │
-         ▼
-   GitHub REST API
+    ┌────────────────────┐
+    │  FastMCP Server    │  ←– your code
+    ├────────────────────┤
+    │ Tools:             │
+    │  • init_github_repo│
+    │  • list_pull_request│
+    │  • get_pull_request_details│
+    │  • get_pull_request_files_changed│
+    │  • get_pull_request_changed_diff│
+    └────────┬───────────┘
+             │
+             ▼
+       GitHub REST API
 
 
 📦 Installation
@@ -117,9 +117,8 @@ MIT License © 2025 Bharat Singh
 ✨ Author
 
 Bharat Singh
-🏗️ 13+ years in Java & Cloud Engineering
-☁️ AWS | Python | Java | MCP | AI Agents
-📧 bharatmca2010@gmail.com
+🏗️ 13+ years in AI Agents  & Cloud Engineering
+☁️ AWS | Python | Java | MCP | Java
 
 📍 India
 

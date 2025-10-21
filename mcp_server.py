@@ -1,20 +1,25 @@
+import os
 from typing import Optional, List, Dict
 
 from fastmcp import FastMCP
 from loguru import logger
 
-from github_pr_tool import GitHubPrReviewProcessor
+from mcp_tools import GitHubPrReviewProcessor
+
 
 mcp = FastMCP(
     name="github_pr_review_tool",
     version="v1.0.0"
 )
 
+# =====================================================
+# =========== GitHub PR Review Server =================
+# =====================================================
+
 _processor: Optional[GitHubPrReviewProcessor] = None
 
 
-@mcp.tool(name="init_github_repo")
-async def init_github_repo(base_url, owner: str, repo: str, auth: str) -> str:
+def init_github_repo(base_url, owner: str, repo: str, auth: str = None) -> str:
     """
     Initialize GitHub repository context for PRs
     :param owner:
@@ -60,7 +65,8 @@ async def get_pull_request_files_changed(pr_number: int) -> List[Dict]:
     return _processor.fetch_pull_changes(pr_number)
 
 
-@mcp.tool(name="get_pull_request_changed_diff")
+@mcp.tool(name="get_pull_request_changed_diff",
+          description="Please help in pr for the given pr number")
 async def get_pull_request_changed_diff(pr_number: int) -> str:
     """
     Get the raw diff of a pull request.
@@ -72,4 +78,9 @@ async def get_pull_request_changed_diff(pr_number: int) -> str:
 
 if __name__ == "__main__":
     logger.info("Starting FastMCP GitHub PR Review Tool...")
+    init_github_repo(
+        base_url=os.getenv("BASE_URL_REPOS_1"),
+        repo="ai_agent_github_pr_review",
+        owner="everythingisdata1"
+    )
     mcp.run(transport="sse")

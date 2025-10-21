@@ -9,8 +9,9 @@ load_dotenv(override=True)
 
 
 # =====================================================
-# GitHub PR Review Processor
+# =========== GitHub PR Review tools =================
 # =====================================================
+
 
 class GitHubPrReviewProcessor:
     def __init__(self,
@@ -69,9 +70,6 @@ class GitHubPrReviewProcessor:
         try:
             resp = self._session.get(url, headers=headers)
             if resp.status_code == 200:
-                with open("pull_request.txt", "w") as f:
-                    f.write(resp.text)
-
                 return resp.text
             logger.error(f"Diff request failed [{resp.status_code}]: {resp.text}")
             return ""
@@ -86,5 +84,5 @@ if __name__ == '__main__':
         owner="everythingisdata1",
         repo="ai_agent_github_pr_review",
     )
-    resp = github_review.get_pull_request_details(1)
+    resp = github_review.pull_pr_diff(1)
     logger.info(resp)
