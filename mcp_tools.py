@@ -1,7 +1,11 @@
+import os
 from typing import Dict, List, Optional
 
 import requests
+from dotenv import load_dotenv
 from loguru import logger
+
+load_dotenv(override=True)
 
 
 # =====================================================
@@ -17,7 +21,7 @@ class GitHubPrReviewProcessor:
         """
         Initialize GitHub PR Review Processor.
         """
-        self._base_url = base_url.rstrip("/")
+        self._base_url = os.getenv("BASE_URL_REPOS_1").rstrip("/")
         self._owner = owner
         self._repo = repo
         self._token = auth_token
@@ -32,6 +36,7 @@ class GitHubPrReviewProcessor:
 
     def _get(self, endpoint: str, params: Optional[Dict] = None) -> Optional[Dict]:
         url = f"{self._base_url}/{endpoint.lstrip('/')}"
+        logger.info(f"URL :: {url}")
         try:
             resp = self._session.get(url, params=params)
             if resp.status_code == 200:
@@ -42,30 +47,44 @@ class GitHubPrReviewProcessor:
             logger.exception(f"Request error for {url}: {ex}")
 
     def pull_all_prs(self, state: str = "open") -> List[Dict]:
-        endpoint = f"/repos/{self._owner}/{self._repo}/pulls"
+        endpoint = f"/{self._owner}/{self._repo}/pulls"
         params = {"state": state, "per_page": 100}
         data = self._get(endpoint, params=params)
         return data if data else []
 
     def get_pull_request_details(self, pr_number: int) -> Dict:
-        endpoint = f"/repos/{self._owner}/{self._repo}/pulls/{pr_number}"
+        endpoint = f"/{self._owner}/{self._repo}/pulls/{pr_number}"
         data = self._get(endpoint)
         return data or {}
 
     def fetch_pull_changes(self, pr_number: int) -> List[Dict]:
-        endpoint = f"/repos/{self._owner}/{self._repo}/pulls/{pr_number}/files"
+        endpoint = f"/{self._owner}/{self._repo}/pulls/{pr_number}/files"
         data = self._get(endpoint)
         return data if data else []
 
     def pull_pr_diff(self, pr_number: int) -> str:
-        url = f"{self._base_url}/repos/{self._owner}/{self._repo}/pulls/{pr_number}"
+        url = f"{self._base_url}/{self._owner}/{self._repo}/pulls/{pr_number}"
+        logger.info(url)
         headers = {"Accept": "application/vnd.github.v3.diff"}
         try:
             resp = self._session.get(url, headers=headers)
             if resp.status_code == 200:
+                with open("pull_request.txt", "w") as f:
+                    f.write(resp.text)
+
                 return resp.text
             logger.error(f"Diff request failed [{resp.status_code}]: {resp.text}")
             return ""
         except requests.RequestException as ex:
             logger.exception(f"Error fetching diff for PR #{pr_number}: {ex}")
             return ""
+
+
+if __name__ == '__main__':
+    logger.info("Starting GitHub PRs Review Agent...")
+    github_review = GitHubPrReviewProcessor(
+        owner="everythingisdata1",
+        repo="ai_agent_github_pr_review",
+    )
+    resp = github_review.get_pull_request_details(1)
+    logger.info(resp)
