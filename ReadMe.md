@@ -4,7 +4,6 @@ A **FastMCP-based AI** tool that allows LLM agents or developers to interact wit
 It enables agents to **list PRs, fetch details, inspect changed files**, and view diffs — all through the **Model Context Protocol (MCP)** interface.
 
 🚀 **Features**
-
          🔐 Authenticate with a GitHub Personal Access Token (PAT)
          📋 List all open/closed pull requests for a repository
          🔍 Get detailed PR information (title, author, branches, etc.)
@@ -28,7 +27,6 @@ It enables agents to **list PRs, fetch details, inspect changed files**, and vie
 
 
 📦 **Installation**
-
 Clone the repository and install dependencies:
 
          git clone https://github.com/<your-username>/github-pr-review-fastmcp.git
@@ -96,12 +94,6 @@ through the MCP runtime.
          ├── requirements.txt
          └── README.md
 
-🛠 **Requirements**
-         
-         Python 3.9+
-         FastMCP (pip install fastmcp)
-         Requests
-         Loguru
 
 📄 **License**
 
