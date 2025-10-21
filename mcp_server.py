@@ -4,7 +4,7 @@ from typing import Optional, List, Dict
 from fastmcp import FastMCP
 from loguru import logger
 
-from mcp_tools import GitHubPrReviewProcessor
+from src.tools.mcp_tools import GitHubPrReviewProcessor
 
 
 mcp = FastMCP(

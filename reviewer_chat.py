@@ -57,4 +57,10 @@ async def run_query(messages, history):
 
 if __name__ == '__main__':
     logger.info("Initialize Agent")
-    gr.ChatInterface(run_query, type="messages").launch()
+    # gr.ChatInterface(run_query, type="messages").launch()
+    with gr.Blocks(fill_height=True, css="footer {visibility: hidden}") as demo:
+        gr.HTML("<h1>GitHub PRs Reviewer AI Assistant</h1>")
+        zc_chatbot = gr.ChatInterface(run_query, type="messages",  fill_height=True )
+
+    if __name__ == "__main__":
+        demo.launch()
