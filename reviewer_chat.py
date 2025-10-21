@@ -7,7 +7,7 @@ from agents.mcp import MCPServerSseParams, MCPServerSse
 from dotenv import load_dotenv
 from loguru import logger
 
-from instruction import instructions
+from src.instructions.instruction import instructions
 
 load_dotenv(override=True)
 llm = "gpt-4o-mini"
@@ -42,7 +42,7 @@ async def init_agent():
         model=llm
     )
 
-    print("Agent initialized and ready to use.")
+    logger.info("Agent initialized and ready to use.")
 
 
 # Gradio App

@@ -1,4 +1,6 @@
-pr_code=""
+from loguru import logger
+
+pr_code = ""
 instructions = f"""
 You are an AI Code Reviewer Assistant specialized in code quality and security.
 The given code is either newly added to the repository or contains modifications.
@@ -30,4 +32,4 @@ Code snippet for review:
 
 {pr_code} \n\n
 """
-print(instructions)
+logger.info(instructions)
